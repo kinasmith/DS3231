@@ -261,7 +261,6 @@ void DS3231::enableAlarm(uint8_t hh24, uint8_t mm, uint8_t ss)
 
 void DS3231::enableAlarm(const DateTime& dt) 
 {
-
 	unsigned char ctReg=0;
 	ctReg |= 0b00011101; 
 	writeRegister(DS3231_CONTROL_REG, ctReg);     //CONTROL Register Address
