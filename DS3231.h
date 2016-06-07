@@ -37,6 +37,9 @@
 #define DS3231_TMP_UP_REG           0x11
 #define DS3231_TMP_LOW_REG          0x12
 
+#define SECONDS_PER_DAY 86400L
+#define SECONDS_FROM_1970_TO_2000 946684800
+
 #define EverySecond     0x01
 #define EveryMinute     0x02
 #define EveryHour       0x03
@@ -47,50 +50,51 @@
 // Simple general-purpose date/time class (no TZ / DST / leap second handling!)
 class DateTime {
 public:
-    DateTime (long t =0);
-    DateTime (uint16_t year, uint8_t month, uint8_t date,
-              uint8_t hour, uint8_t min, uint8_t sec, uint8_t wday);
-    DateTime (const char* date, const char* time);
+	DateTime (long t =0);
+	DateTime (uint16_t year, uint8_t month, uint8_t date, uint8_t hour, uint8_t min, uint8_t sec, uint8_t wday);
+	DateTime (const char* date, const char* time);
 
-    uint8_t second() const      { return ss; }
-    uint8_t minute() const      { return mm; } 
-    uint8_t hour() const        { return hh; }
+	uint8_t second() const      { return ss; }
+	uint8_t minute() const      { return mm; } 
+	uint8_t hour() const        { return hh; }
  
-    uint8_t date() const        { return d; }
-    uint8_t month() const       { return m; }
-    uint16_t year() const       { return 2000 + yOff; }
+	uint8_t date() const        { return d; }
+	uint8_t month() const       { return m; }
+	uint16_t year() const       { return 2000 + yOff; }
 
-    uint8_t dayOfWeek() const   { return wday;}  /*Su=0 Mo=1 Tu=3 We=4 Th=5 Fr=6 Sa=7 */
-
-    // 32-bit time as seconds since 1/1/2000
-    long get() const;   
+	uint8_t dayOfWeek() const   { return wday;}  /*Su=0 Mo=1 Tu=3 We=4 Th=5 Fr=6 Sa=7 */
+	
+	// 32-bit times as seconds since 1/1/2000
+	long secondstime() const;   
+	// 32-bit times as seconds since 1/1/1970
+	uint32_t unixtime(void) const;
 
 protected:
-    uint8_t yOff, m, d, hh, mm, ss, wday;
+	uint8_t yOff, m, d, hh, mm, ss, wday;
 };
 
 // RTC DS3231 chip connected via I2C and uses the Wire library.
 // Only 24 Hour time format is supported in this implementation
 class DS3231 {
 public:
-    uint8_t begin(void);
-    uint8_t readRegister(uint8_t regaddress);
-    void writeRegister(uint8_t regaddress, uint8_t value);
+	uint8_t begin(void);
+	uint8_t readRegister(uint8_t regaddress);
+	void writeRegister(uint8_t regaddress, uint8_t value);
 
-    void adjust(const DateTime& dt);  //Changes the date-time
-    static DateTime now();            //Gets the current date-time
+	void adjust(const DateTime& dt);  //Changes the date-time
+	static DateTime now();            //Gets the current date-time
 
-    //Decides the /INT pin's output setting
-    //periodicity can be any of following defines: EverySecond, EveryMinute, EveryHour 
-    void enableInterrupts(uint8_t periodicity);
-    void enableInterrupts(uint8_t hh24, uint8_t mm,uint8_t ss);
-    void disableInterrupts();
-    void clearINTStatus();
+	//Decides the /INT pin's output setting
+	//periodicity can be any of following defines: EverySecond, EveryMinute, EveryHour 
+	void enableAlarm(uint8_t periodicity);
+	void enableAlarm(uint8_t hh24, uint8_t mm,uint8_t ss);
+	void disableAlarm();
+	void clearAlarm();
 
-    void convertTemperature();
-    float getTemperature();
+	void convertTemperature();
+	float getTemperature();
 protected:
-    uint8_t intType, intPeriodicity, intHH24, intMM;
+	uint8_t intType, intPeriodicity, intHH24, intMM;
 };
 
 #endif
