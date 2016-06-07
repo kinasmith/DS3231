@@ -1,7 +1,10 @@
-RDS3231 Class is by Seeed Technology Inc(http://www.seeedstudio.com) and used
-in Seeeduino Stalker v2.1 for battery management(MCU power saving mode)
-& to generate timestamp for data logging. DateTime Class is a modified
-version supporting day-of-week.
+Modified by Kina Smith. 
+Added .unixtime() functionality
+Changed the name of the interrupt functions to enableAlarm()
+Added the ability to create Alarms using DateTime Objects
+
+
+Original forked from: https://github.com/bpg/DS3231
 
 Original DateTime Class and its utility code is by Jean-Claude Wippler at JeeLabs
 http://jeelabs.net/projects/cafe/wiki/RTClib 
