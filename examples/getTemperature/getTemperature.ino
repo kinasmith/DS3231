@@ -7,15 +7,15 @@ DS3231 RTC; //Create the DS3231 object
 
 void setup () 
 {
-    Serial.begin(57600);
-    Wire.begin();
-    RTC.begin();
+	Serial.begin(9600);
+	Wire.begin();
+	RTC.begin();
 }
 
 void loop () 
 {
-    RTC.convertTemperature();             //convert current temperature into registers
-    Serial.print(RTC.getTemperature()); //read registers and display the temperature
-    Serial.println("deg C");
-    delay(1000);
+	RTC.convertTemperature();             //convert current temperature into registers
+	Serial.print(RTC.getTemperature()); //read registers and display the temperature
+	Serial.println("deg C");
+	delay(1000);
 }

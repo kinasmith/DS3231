@@ -14,7 +14,7 @@ void setup ()
 	 PORTD |= 0x04; 
 	 DDRD &=~ 0x04;
   
-	 Serial.begin(57600);
+	 Serial.begin(9600);
 	 Wire.begin();
 	
 	 RTC.begin();
