@@ -88,6 +88,7 @@ public:
 	//periodicity can be any of following defines: EverySecond, EveryMinute, EveryHour 
 	void enableAlarm(uint8_t periodicity);
 	void enableAlarm(uint8_t hh24, uint8_t mm,uint8_t ss);
+	void enableAlarm(const DateTime& dt);
 	void disableAlarm();
 	void clearAlarm();
 

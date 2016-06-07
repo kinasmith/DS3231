@@ -259,6 +259,20 @@ void DS3231::enableAlarm(uint8_t hh24, uint8_t mm, uint8_t ss)
 		writeRegister(DS3231_AL1WDAY_REG, 0b10000000 ); //set AM4
 }
 
+void DS3231::enableAlarm(const DateTime& dt) 
+{
+
+	unsigned char ctReg=0;
+	ctReg |= 0b00011101; 
+	writeRegister(DS3231_CONTROL_REG, ctReg);     //CONTROL Register Address
+
+	writeRegister(DS3231_AL1SEC_REG,  0b00000000 | bin2bcd(dt.second()) ); //Clr AM1
+	writeRegister(DS3231_AL1MIN_REG,  0b00000000 | bin2bcd(dt.minute())); //Clr AM2
+	writeRegister(DS3231_AL1HOUR_REG, (0b00000000 | (bin2bcd(dt.hour()) & 0b10111111))); //Clr AM3
+	writeRegister(DS3231_AL1WDAY_REG, 0b10000000 ); //set AM4
+
+}
+
 //Disable Interrupts. This is equivalent to begin() method.
 void DS3231::disableAlarm()
 {
