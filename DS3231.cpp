@@ -7,14 +7,17 @@
 // http://jeelabs.net/projects/cafe/wiki/RTClib 
 // Released under MIT License http://opensource.org/licenses/mit-license.php
 
-#include <Wire.h>
+
+
+#include <DS3231.h>
+
+// These included for the DateTime class inclusion; will try to find a way to
+// not need them in the future...
 #include <avr/pgmspace.h>
-#include "DS3231.h"
-#if ARDUINO >= 100
-	#include "Arduino.h"
-#else
-	#include "WProgram.h"
-#endif
+// Changed the following to work on 1.0
+//#include "WProgram.h"
+#include <Arduino.h>
+
 
 #define SECONDS_PER_DAY 86400L
 
