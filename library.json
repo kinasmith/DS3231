@@ -16,11 +16,7 @@
       "maintainer": true
     }
   ],
-  "dependencies":
-  {
-    "name": "Wire.h",
-    "frameworks": "arduino"
-  },
+  "dependencies": {},
   "version": "1.0.0",
   "frameworks": "arduino",
   "platforms": "*"
